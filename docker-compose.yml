@@ -1,0 +1,118 @@
+version: "3.8"
+
+services:
+  # PostgreSQL Database for oQo-scripts
+  postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: mydatabase
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: mypassword
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - kdb-network
+
+  # Redis for Paperless-ngx
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    networks:
+      - kdb-network
+
+  # Paperless-ngx Document Management System
+  paperless:
+    image: ghcr.io/paperless-ngx/paperless-ngx:latest
+    environment:
+      PAPERLESS_REDIS: redis://redis:6379
+      PAPERLESS_DBHOST: postgres
+      PAPERLESS_DBNAME: paperless
+      PAPERLESS_DBUSER: paperless
+      PAPERLESS_DBPASS: paperless
+      PAPERLESS_SECRET_KEY: change-me-in-production
+      PAPERLESS_ALLOWED_HOSTS: localhost,127.0.0.1,paperless
+      PAPERLESS_CORS_ALLOWED_HOSTS: http://localhost:5173,http://localhost:3000
+      PAPERLESS_URL: http://localhost:8000
+    ports:
+      - "8001:8000" # Using 8001 to avoid conflict with KDB-importer backend
+    volumes:
+      - paperless_data:/usr/src/paperless/data
+      - paperless_media:/usr/src/paperless/media
+      - paperless_export:/usr/src/paperless/export
+      - paperless_consume:/usr/src/paperless/consume
+    depends_on:
+      - redis
+      - postgres
+    networks:
+      - kdb-network
+
+  # KDB-importer Backend (FastAPI)
+  kdb-backend:
+    build:
+      context: ./KDB-importer/backend
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      - PYTHONPATH=/app
+      - PAPERLESS_BASE_URL=${PAPERLESS_BASE_URL}
+      - PAPERLESS_API_TOKEN=${PAPERLESS_API_TOKEN}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+    networks:
+      - kdb-network
+    depends_on:
+      - postgres
+
+  # KDB-importer Frontend (React)
+  kdb-frontend:
+    build:
+      context: ./KDB-importer/frontend
+      dockerfile: Dockerfile
+    ports:
+      - "5173:4173"
+    environment:
+      - VITE_API_BASE_URL=http://localhost:8000/api
+    networks:
+      - kdb-network
+    depends_on:
+      - kdb-backend
+
+  # oQo-scripts (Florian's automation)
+  oqo-scripts:
+    build:
+      context: ./oQo-scripts
+      dockerfile: Dockerfile
+    environment:
+      - PAPERLESS_URL=${PAPERLESS_BASE_URL}
+      - PAPERLESS_TOKEN=${PAPERLESS_API_TOKEN}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - PG_HOST=postgres
+      - PG_PORT=5432
+      - PG_USER=myuser
+      - PG_PASSWORD=mypassword
+      - PG_DB=mydatabase
+      - INCLUDE_PATH=/app/include
+    volumes:
+      - ./oQo-scripts/include:/app/include
+      - oqo_documents:/app/documents
+    networks:
+      - kdb-network
+    depends_on:
+      - postgres
+    profiles:
+      - automation # Only start when explicitly requested
+
+volumes:
+  postgres_data:
+  paperless_data:
+  paperless_media:
+  paperless_export:
+  paperless_consume:
+  oqo_documents:
+
+networks:
+  kdb-network:
+    driver: bridge

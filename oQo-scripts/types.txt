@@ -1,0 +1,10 @@
+Scientific-Paper
+Presentation
+Book-Chapter
+News-Article
+Article
+Position-Paper
+Lecture-Notes
+Whitepaper
+Tutorial
+Programming-Tutorial

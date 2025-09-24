@@ -1,0 +1,32 @@
+Quantum Algorithm
+Quantum Key Distribution (QKD)
+Regulatory
+Standards
+Quantum Computing
+Quantum Hardware
+Quantum Communication
+Post Quantum Cryptography (PQC)
+Cybersecurity
+Cryptography
+Quantum Benchmarking
+Noisy Intermediate-Scale Quantum (NISQ)
+Quantum Error Correction
+IBM Qiskit
+Google Cirq
+Rigetti Forest, Quil
+Microsoft Q#, QDK
+Xanadu PennyLane
+Amazon Braket
+D-Wave Ocean SDK
+QuTiP
+ProjectQ
+OpenFermion
+Quantum Cloud Computing
+Quantum Networking
+Quantum AI
+Quantum Blockchain
+Quantum Ethics
+Quantum Supremacy and Advantage
+Quantum Programming Languages
+Quantum Operating Systems
+

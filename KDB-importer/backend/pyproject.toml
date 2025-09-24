@@ -1,0 +1,23 @@
+[project]
+name = "arxiv-importer"
+version = "0.1.0"
+description = "A platform to import and manage arXiv papers via queries or IDs"
+authors = [
+  { name = "The BEST"},
+  { name = "The GOAT"}
+]
+requires-python = ">=3.9"
+dependencies = [
+    "fastapi",
+    "uvicorn[standard]",
+    "httpx",
+    "pydantic",
+    "python-dotenv",
+    "arxiv",        # If using the arxiv client lib
+]
+
+[project.optional-dependencies]
+dev = ["pytest", "pytest-cov", "ruff", "mypy"]
+
+[tool.setuptools.packages.find]
+where = ["arxiv_importer"]

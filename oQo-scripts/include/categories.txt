@@ -1,0 +1,13 @@
+Scientific-Paper
+Research-Article
+Technical-Document
+White-Paper
+Conference-Paper
+Journal-Article
+Preprint
+Review-Paper
+Standard-Document
+Regulatory-Document
+Policy-Document
+Technical-Report
+

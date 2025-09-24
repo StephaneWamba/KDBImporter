@@ -1,0 +1,11 @@
+Quantum Hardware
+Algorithms
+Quantum Programming & Software
+Cryptography
+Simulation
+Quantum Machine Learning
+Quantum Simulation
+Applications of Quantum Computing
+Quantum Risk, Strategy, and Industry
+Ethics, Policy, and Society
+Standards and Regulatory
