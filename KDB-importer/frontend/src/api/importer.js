@@ -1,7 +1,10 @@
 import axios from 'axios';
 
+// Debug environment variable
+console.log('REACT_APP_API_URL:', process.env.REACT_APP_API_URL);
+
 const api = axios.create({
-  baseURL: process.env.REACT_APP_API_URL || 'http://localhost:8000/api',
+  baseURL: process.env.REACT_APP_API_URL || 'http://kdb-alb-1026840859.us-east-1.elb.amazonaws.com/api',
   headers: {
     'Content-Type': 'application/json',
   },
