@@ -40,9 +40,9 @@ class PaperInfo(BaseModel):
 
 
 class MetadataOutput(BaseModel):
-    importance: Optional[str]
-    tag: Optional[str]
-    _raw: Dict[str, Any]
+    importance: Optional[str] = None
+    tag: Optional[str] = None
+    raw_data: Dict[str, Any] = Field(default_factory=dict)
 
 
 class ImportResult(BaseModel):
