@@ -2,10 +2,10 @@ import axios from 'axios';
 
 // Debug environment variable - Build Version 1.2
 console.log('REACT_APP_API_URL:', process.env.REACT_APP_API_URL);
-console.log('Using API URL:', process.env.REACT_APP_API_URL || 'http://kdb-alb-1026840859.us-east-1.elb.amazonaws.com/api');
+console.log('Using API URL:', process.env.REACT_APP_API_URL || 'https://d3r55cb0zlsgqv.cloudfront.net/api');
 
 const api = axios.create({
-  baseURL: process.env.REACT_APP_API_URL || 'http://kdb-alb-1026840859.us-east-1.elb.amazonaws.com/api',
+  baseURL: process.env.REACT_APP_API_URL || 'https://d3r55cb0zlsgqv.cloudfront.net/api',
   headers: {
     'Content-Type': 'application/json',
   },
