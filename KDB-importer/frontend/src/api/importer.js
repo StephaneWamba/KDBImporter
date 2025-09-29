@@ -5,7 +5,7 @@ console.log('REACT_APP_API_URL:', process.env.REACT_APP_API_URL);
 console.log('Using API URL:', process.env.REACT_APP_API_URL || 'http://kdb-alb-1026840859.us-east-1.elb.amazonaws.com/api');
 
 const api = axios.create({
-  baseURL: process.env.REACT_APP_API_URL || 'http://kdb-alb-1026840859.us-east-1.elb.amazonaws.com/api',
+  baseURL: process.env.REACT_APP_API_URL || 'https://kdb-alb-1026840859.us-east-1.elb.amazonaws.com/api',
   headers: {
     'Content-Type': 'application/json',
   },
